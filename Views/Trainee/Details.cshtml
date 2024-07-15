@@ -1,0 +1,113 @@
+﻿@model MVCProject_1280293.Models.Trainee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#courseInfo").click(function () {
+            $.ajax({
+                url: "@Url.Action("CourseDetails", "Trainee", new {id = @Model.TraineeId})",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $("#courseDisplay table tbody").empty;
+                    for (var i = 0; i < result.length; i++) {
+                        $("#courseDisplay table tbody").append("<tr><td>" + result[i].courseName + "</td><td>" + result[i].duration + "</td><td>" + result[i].courseFee);
+                    }
+                    $("#courseDisplay").show();
+                }
+            });
+            this.disabled = true;
+        });
+    });
+</script>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <fieldset>
+                <legend>Trainee Information</legend>
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.TraineeName)
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.TraineeName)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.FatherName) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.FatherName)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Gender) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Gender)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.DateOfBirth) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.DateOfBirth)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Address) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Address)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Email) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Email)
+                </span>
+                <br />
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Image) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Image)
+                </span>
+            </fieldset>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeId }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <button class="btn btn-info" id="courseInfo" data-order-id="@Model.TraineeId">Course Enroll Details</button>
+            </div>
+            <br />
+            <div id="courseDisplay" style="display:none">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Duration</th>
+                            <th>Course Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
